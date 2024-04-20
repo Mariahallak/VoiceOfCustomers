@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -564,3 +565,6 @@ elif view == 'Deep Dive : Socio Economic Influencers':
     # Create and display the scatter plot
     scatter_plot = create_scatter_plot(country_averages, factor_options[factor])
     st.plotly_chart(scatter_plot, use_container_width=True)
+=======
+
+>>>>>>> 1f9c36c8859adf59bd9ea80a9b77816b5178a1d6
