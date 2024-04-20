@@ -1,33 +1,46 @@
-#latest 4
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+import streamlit.components.v1 as components
 
-# # Sets the page to wide layout. This should be the first Streamlit command
+# Sets the page to wide layout.
 st.set_page_config(layout="wide")
-            
-# Custom CSS for boxes with black background and white font
-st.markdown(
-    """
+
+# Sidebar for dashboard selection
+view = st.sidebar.radio("Select Dashboard", ('Summary Dashboard', 
+                                             'Section 1: Employee Experience',
+                                             'Section 2: Recruiting & Onboarding',
+                                             'Section 3: Performance & Talent',
+                                             'Section 4: Learning',
+                                             'Section 5: Compensation',
+                                             'Section 6: Payroll',
+                                             'Section 7: Time Management',
+                                             'Section 8: User Experience',
+                                             'Chatbot'
+                                             ))
+
+# Apply filters and display sections
+if view == 'Global Overview':
+    st.markdown("""
     <style>
-    .box {
-        background-color: #000000; /* Black background */
-        color: #ffffff; /* White text */
-        border-radius: 7px;
-        padding: 10px;
-        margin: 10px 0px;
-        text-align: center; /* Center text */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+        h1 {
+            text-align: center;
+            color: black;
+            margin-bottom: 0px;  /* Remove bottom margin */
+        }
+        h3 {
+            text-align: center;
+            color: black;
+            margin-top: 0.2px;  /* Remove top margin */
+        }
     </style>
-    """,
-    unsafe_allow_html=True,
-)
+    <h1>Comprehensive Exploration Of Global Health and Demographic Dataset</h1>
+    <h3>A deep dive into the complex interplay between health expenditures, immunization rates, socioeconomic factors, and their collective influence on life expectancy across the globe.</h3>
+    """, unsafe_allow_html=True)
+
 
 # Load and clean data
 @st.cache_data
@@ -50,6 +63,27 @@ def load_data():
     return data
 
 data = load_data()
+
+# Custom CSS for boxes with black background and white font
+st.markdown(
+    """
+    <style>
+    .box {
+        background-color: #000000; /* Black background */
+        color: #ffffff; /* White text */
+        border-radius: 7px;
+        padding: 10px;
+        margin: 10px 0px;
+        text-align: center; /* Center text */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 
 #Geolocation Data for Implementing the World Map
 @st.cache_data
@@ -209,7 +243,7 @@ def plot_life_expectancy_vs_health_expenditure(filtered_data, year_range):
     )
     return fig
 
-import streamlit.components.v1 as components
+
 
 # Function to calculate statistics and create a table
 def create_life_expectancy_table(filtered_data, year_range):
@@ -338,27 +372,6 @@ def create_scatter_plot(data, factor):
     fig.update_layout(height=600)
     return fig
 
-# Sidebar for filters and view selection
-view = st.sidebar.radio("Select View", ('Global Overview', 'Deep Dive : Socio Economic Influencers'))
-
-# Apply filters and display sections
-if view == 'Global Overview':
-    st.markdown("""
-    <style>
-        h1 {
-            text-align: center;
-            color: black;
-            margin-bottom: 0px;  /* Remove bottom margin */
-        }
-        h3 {
-            text-align: center;
-            color: black;
-            margin-top: 0.2px;  /* Remove top margin */
-        }
-    </style>
-    <h1>Comprehensive Exploration Of Global Health and Demographic Dataset</h1>
-    <h3>A deep dive into the complex interplay between health expenditures, immunization rates, socioeconomic factors, and their collective influence on life expectancy across the globe.</h3>
-    """, unsafe_allow_html=True)
 
 # Summary Information
     st.markdown("""
